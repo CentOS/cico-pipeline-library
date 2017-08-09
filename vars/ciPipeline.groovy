@@ -11,14 +11,12 @@ def call(body) {
     try {
         def current_stage = 'cico-pipeline-lib-stage1'
         stage(current_stage) {
-            env.DUFFY_OPS = "--no-op"
-            getDuffy.duffy(current_stage, "${env.DUFFY_OPS}")
+            getDuffy.duffyCciskel(current_stage)
 
         }
         current_stage = 'cico-pipeline-lib-stage2'
         stage(current_stage) {
-            env.DUFFY_OPS = "--no-op"
-            getDuffy.duffy(current_stage, "${env.DUFFY_OPS}")
+            getDuffy.duffyCciskel(current_stage)
         }
     } catch (err) {
         echo "Error: Exception from " + current_stage + ":"
