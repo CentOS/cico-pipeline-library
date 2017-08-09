@@ -1,4 +1,11 @@
-// Method for allocating and tearing down duffy resources using https://github.com/cgwalters/centos-ci-skeleton
+#!/usr/bin/groovy
+package org.centos
+
+
+/**
+ * Method for allocating and tearing down duffy resources using https://github.com/cgwalters/centos-ci-skeleton
+ * duffyOps can be '--allocate', '--teardown', and '--no-op'
+ */
 def duffy(stage,  duffyOps = '--allocate', duffyKey = 'duffy-key',
           repoUrl = 'https://github.com/cgwalters/centos-ci-skeleton', subDir = 'cciskel') {
 
@@ -9,13 +16,13 @@ def duffy(stage,  duffyOps = '--allocate', duffyKey = 'duffy-key',
     env.DUFFY_OP = "${duffyOps}"
     echo "Currently in stage: ${stage} ${env.DUFFY_OP} resources"
 
-    if (!(fileExists(subDir))) {
+    if (! (fileExists(subDir)) ){
         dir(subDir) {
             git repoUrl
         }
     }
 
-    if (duffyOps != "--no-op") {
+    if (duffyOps != "--no-op"){
 
         withCredentials([file(credentialsId: duffyKey, variable: 'DUFFY_KEY')]) {
             sh '''
@@ -43,6 +50,14 @@ def duffy(stage,  duffyOps = '--allocate', duffyKey = 'duffy-key',
                 '''
         }
     }
+}
+
+/**
+ * Convert bash shell properties to groovy
+ */
+def convertProps(file1, file2) {
+    def command = $/awk -F'=' '{print "env."$1"=\""$2"\""}' ${file1} > ${file2}/$
+    sh command
 }
 
 // ensure we return 'this' on last line to allow this script to be loaded into flows
