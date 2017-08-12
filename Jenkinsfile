@@ -1,4 +1,4 @@
-@Library('cico-pipeline-library') _
+@Library('github.com/CentOS/cico-pipeline-library@master') _
 
 node {
     deleteDir()

@@ -14,7 +14,9 @@ Shared Library and example code to use Jenkinsfiles based Jenkins Pipelines in
 1. Add global library 'cico-pipeline-library' pointing to github location [https://github.com/CentOS/cico-pipeline-library](https://github.com/CentOS/cico-pipeline-library) <br> 
    in (Manage Jenkins > Configure System > Global Pipeline Libraries)
    ![cico-pipeline-library-config](cico-pipeline-library-config.png)
-2. Add `@Library('cico-pipeline-library') _` into your pipeline definition more details: 
+2. Add `@Library('github.com/CentOS/cico-pipeline-library@master') _` 
+   into your pipeline definition to dynamically load the library. <br>
+   More details: 
    1. https://github.com/jenkinsci/workflow-cps-global-lib-plugin
    2. https://jenkins.io/doc/book/pipeline/shared-libraries/
    
@@ -55,7 +57,7 @@ def call(body) {
 
 #### Jenkinsfile
 ```
-@Library('cico-pipeline-library') _
+@Library('github.com/CentOS/cico-pipeline-library@master') _
 
 node {
     deleteDir()
