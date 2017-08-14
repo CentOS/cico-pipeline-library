@@ -23,10 +23,12 @@ Shared Library and example code to use Jenkinsfiles based Jenkins Pipelines in
 
 ## Examples
 
-### Basic Duffy Example
+### Basic Library Example
 
 #### vars/ciPipeline.groovy
 ```
+import org.centos.Utils
+
 import org.centos.Utils
 
 def call(body) {
@@ -37,15 +39,29 @@ def call(body) {
     body()
 
     def getDuffy = new Utils()
+    def pipelineProps = ''
     try {
         def current_stage = 'cico-pipeline-lib-stage1'
         stage(current_stage) {
-            getDuffy.duffyCciskel(current_stage)
-
+            writeFile file: "${env.WORKSPACE}/job.properties",
+                    text: "MYVAR1=test\n" +
+                          "MYVAR2=3\n"
         }
         current_stage = 'cico-pipeline-lib-stage2'
         stage(current_stage) {
-            getDuffy.duffyCciskel(current_stage)
+            // Convert a classic shell properties file to groovy format to be loaded
+            pipelineProps = convertProps("${env.WORKSPACE}/job.properties")
+            // Load these as environment variables into the pipeline
+            load(pipelineProps)
+            sh '''
+                echo "Original Shell Properties File:"
+                cat ${WORKSPACE}/job.properties
+                echo ""
+                echo "Groovy Properties File:"
+                cat ${WORKSPACE}/job.properties.groovy
+                echo "Environment Variables"
+                env
+            '''
         }
     } catch (err) {
         echo "Error: Exception from " + current_stage + ":"
@@ -61,8 +77,6 @@ def call(body) {
 
 node {
     deleteDir()
-    ciPipeline {
-
-    }
+    ciPipeline { }
 }
 ```
