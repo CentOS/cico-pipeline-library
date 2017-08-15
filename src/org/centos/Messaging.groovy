@@ -27,3 +27,6 @@ def sendMessage(msgMap) {
         throw err
     }
 }
+
+// ensure we return 'this' on last line to allow this script to be loaded into flows
+return this
