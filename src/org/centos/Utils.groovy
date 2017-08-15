@@ -2,18 +2,18 @@
 package org.centos
 
 /**
-  * Wrapper function to allocate duffy resources using cciskel
+  * Wrapper function to allocate duffy resources using duffyCciskel
   */
 def allocateDuffyCciskel(stage) {
-    duffyCciskelOps = [stage:stage, duffyOps: '--allocate']
+    duffyCciskelOps = [stage:stage, duffyOps:'--allocate']
     duffyCciskel(duffyCciskelOps)
 }
 
 /**
- * Wrapper function to teardown duffy resources using cciskel
+ * Wrapper function to teardown duffy resources using duffyCciskel
  */
 def teardownDuffyCciskel(stage) {
-    duffyCciskelOps = [stage:stage, duffyOps: '--teardown']
+    duffyCciskelOps = [stage:stage, duffyOps:'--teardown']
     duffyCciskel(duffyCciskelOps)
 }
 
