@@ -9,14 +9,22 @@ Shared Library and example code to use Jenkinsfiles based Jenkins Pipelines in
 * [Pipeline Shared Libraries](https://github.com/jenkinsci/workflow-cps-global-lib-plugin) plugin
 * Other plugins may be required for specific library calls (i.e. Docker)
 
-## Usage
+## Usage of Shared Libraries
 
-1. Add global library 'cico-pipeline-library' pointing to github location [https://github.com/CentOS/cico-pipeline-library](https://github.com/CentOS/cico-pipeline-library) <br> 
+### Option 1 - Global Configuration
+   Add global library 'cico-pipeline-library' pointing to github location [https://github.com/CentOS/cico-pipeline-library](https://github.com/CentOS/cico-pipeline-library) <br> 
    in (Manage Jenkins > Configure System > Global Pipeline Libraries)
    ![cico-pipeline-library-config](cico-pipeline-library-config.png)
-2. Add `@Library('github.com/CentOS/cico-pipeline-library@master') _` 
-   into your pipeline definition to dynamically load the library. <br>
-   More details: 
+   Add `@Library('cico-pipeline-library') _` into your Jenkinsfile pipeline file
+   
+### Option 2 - Dynamically Load the Library
+   Add `@Library('github.com/CentOS/cico-pipeline-library@master') _` 
+   into your Jenkins pipeline file to dynamically load the library. <br>
+   
+_Note: You can also specify a specify path for libraries insteaf of _ like
+      `import org.centos.*`_
+      
+### More General Information: 
    1. https://github.com/jenkinsci/workflow-cps-global-lib-plugin
    2. https://jenkins.io/doc/book/pipeline/shared-libraries/
    
