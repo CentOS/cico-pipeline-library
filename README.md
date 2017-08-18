@@ -33,10 +33,8 @@ _Note: You can also specify a specify path for libraries insteaf of _ like
 
 ### Basic Library Example
 
-#### vars/ciPipeline.groovy
+#### vars/cicoPipeline.groovy
 ```
-import org.centos.Utils
-
 import org.centos.Utils
 
 def call(body) {
@@ -85,6 +83,6 @@ def call(body) {
 
 node {
     deleteDir()
-    ciPipeline { }
+    cicoPipeline {}
 }
 ```
