@@ -2,5 +2,5 @@
 
 node {
     deleteDir()
-    ciPipeline {  }
+    cicoPipeline {}
 }
