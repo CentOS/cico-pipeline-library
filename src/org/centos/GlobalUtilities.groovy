@@ -5,9 +5,9 @@
   carefully control access to
  */
 
-/** 
-  Method for aborting all other instances of this job
-  that were still running at the time this method is invoked
+/**
+ * Method for aborting all other instances of this job
+ * that were still running at the time this method is invoked
  */
 def abortPreviousRunningBuilds() {
   def jobname = env.JOB_NAME

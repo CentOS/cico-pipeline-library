@@ -2,35 +2,38 @@
 package org.centos
 
 /**
-  * Wrapper function to allocate duffy resources using duffyCciskel
-  */
-def allocateDuffyCciskel(stage) {
+ * Wrapper function to allocate duffy resources using duffyCciskel
+ * @param stage Current stage
+ * @return
+ */
+def allocateDuffyCciskel(String stage) {
     duffyCciskelOps = [stage:stage, duffyOps:'--allocate']
     duffyCciskel(duffyCciskelOps)
 }
 
 /**
  * Wrapper function to teardown duffy resources using duffyCciskel
+ * @param stage Current stage
+ * @return
  */
-def teardownDuffyCciskel(stage) {
+def teardownDuffyCciskel(String stage) {
     duffyCciskelOps = [stage:stage, duffyOps:'--teardown']
     duffyCciskel(duffyCciskelOps)
 }
 
 /**
  * Method for allocating and tearing down duffy resources using https://github.com/cgwalters/centos-ci-skeleton
- * Pass a map to the library
- * duffyMap defaults:
- *  duffyMap[stage:'duffyCciskel-stage',
+ * @param duffyMap Default duffyMap[stage:'duffyCciskel-stage',
  *           originClass:'builder',
  *           duffyTimeoutSecs:'3600,
  *           duffyOps:'',
  *           subDir:'cciskel',
  *           repoUrl:'https://github.com/cgwalters/centos-ci-skeleton',
  *           duffyKey: 'duffy-key']
- *  duffyKey refers to a secret-file credential setup in Jenkins credentials
+ * @note duffyKey refers to a secret-file credential setup in Jenkins credentials
+ * @return
  */
-def duffyCciskel(duffyMap) {
+def duffyCciskel(Map duffyMap) {
 
     env.ORIGIN_WORKSPACE = "${env.WORKSPACE}/${duffyMap.containsKey('stage') ? duffyMap.stage : 'duffyCciskel-stage'}"
     env.ORIGIN_BUILD_TAG = "${env.BUILD_TAG}-${duffyMap.stage}"
@@ -76,14 +79,14 @@ def duffyCciskel(duffyMap) {
 }
 
 /**
- * Convert bash shell properties to groovy
- * shellFile - Pass a shell formatted properties file
+ * Library to prepend 'env.' to the keys in source file and write them in a format of env.key=value in the destination file.
+ * @param sourceFile - The file to read from
+ * @param destinationFile - The file to write to; defaults to sourceFile, resulting in overwriting the source file.
+ * @return
  */
-def convertProps(shellFile) {
-    def command = $/awk -F'=' '{print "env."$1"=\""$2"\""}' ${shellFile} > ${shellFile}.groovy/$
+def convertProps(String sourceFile, String destinationFile=sourceFile) {
+    def command = $/awk -F'=' '{print "env."$1"=\""$2"\""}' ${sourceFile} > ${destinationFile}/$
     sh command
-
-    return "${shellFile}.groovy"
 }
 
 // ensure we return 'this' on last line to allow this script to be loaded into flows
