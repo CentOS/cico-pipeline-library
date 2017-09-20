@@ -84,7 +84,7 @@ def duffyCciskel(Map duffyMap) {
  * @param destinationFile - The file to write to; defaults to sourceFile, resulting in overwriting the source file.
  * @return
  */
-def convertProps(String sourceFile, String destinationFile=sourceFile) {
+def convertProps(String sourceFile, String destinationFile="${sourceFile}.groovy") {
     def command = $/awk -F'=' '{print "env."$1"=\""$2"\""}' ${sourceFile} > ${destinationFile}/$
     sh command
 }
