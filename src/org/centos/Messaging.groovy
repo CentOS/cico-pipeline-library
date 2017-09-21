@@ -3,14 +3,12 @@ package org.centos
 
 /**
  * Library to publish a message using the JMS Messaging Plugin
- * Required Plugin: https://wiki.jenkins.io/display/JENKINS/JMS+Messaging+Plugin
  *
- * Pass a map to the library
- * msgMap requires passing key/values for msgMap.msgProps and msgMap.topic
- * msgMap defaults:
- *  msgMap[msgType:'Custom'
+ * Required Plugin: https://wiki.jenkins.io/display/JENKINS/JMS+Messaging+Plugin
+ * @param msgMap Requires passing key/values for msgMap.msgProps and msgMap.topic. Default value is msgMap[msgType:'Custom']
+ * @return
  */
-def sendMessage(msgMap) {
+def sendMessage(Map msgMap) {
     try {
         if ( (!(msgMap.containsKey('msgProps')) || (msgMap.msgProps == ""))
                 || (!(msgMap.containsKey('topic')) || (msgMap.topic == "")) ) {
