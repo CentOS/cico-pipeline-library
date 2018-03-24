@@ -1,4 +1,4 @@
-import org.centos.Utils
+import org.centos.OpenshiftUtils
 
 /**
  * Library of Openshift Utils using the Openshift Client Jenkins Plugin
