@@ -22,7 +22,7 @@ def call(body) {
             pipelineProps = getUtils.convertProps("${env.WORKSPACE}/job.properties")
             // Load these as environment variables into the pipeline
             load(pipelineProps)
-            sh '''
+            sh script: '''
                 echo "Original Shell Properties File:"
                 cat ${WORKSPACE}/job.properties
                 echo ""
@@ -30,7 +30,7 @@ def call(body) {
                 cat ${WORKSPACE}/job.properties.groovy
                 echo "Environment Variables"
                 env
-            '''
+            ''', label: "Loading environment variables into the pipeline"
         }
     } catch (err) {
         echo "Error: Exception from " + current_stage + ":"
