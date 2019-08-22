@@ -51,7 +51,7 @@ def duffyCciskel(Map duffyMap) {
 
     withCredentials([file(credentialsId: duffyMap.containsKey('duffyKey') ? duffyMap.duffyKey : 'duffy-key',
             variable: 'DUFFY_KEY')]) {
-        sh '''
+        sh script: '''
                 #!/bin/bash
                 set -xeuo pipefail
         
@@ -74,7 +74,7 @@ def duffyCciskel(Map duffyMap) {
                     exec ${WORKSPACE}/cciskel/cciskel-duffy ${DUFFY_OP}
                 fi
                 exit
-        '''
+        ''', label: "Allocating and tearing down duffy resources"
     }
 }
 
@@ -86,7 +86,7 @@ def duffyCciskel(Map duffyMap) {
  */
 def convertProps(String sourceFile, String destinationFile="${sourceFile}.groovy") {
     def command = $/awk -F'=' '{print "env."$1"=\""$2"\""}' ${sourceFile} > ${destinationFile}/$
-    sh command
+    sh script: command, label: "Prepending 'env.' to the keys in source file and writing them in a format of env.key=value in the destination file"
 }
 
 // ensure we return 'this' on last line to allow this script to be loaded into flows

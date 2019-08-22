@@ -13,7 +13,7 @@ def sendMessage(Map msgMap) {
         if ( (!(msgMap.containsKey('msgProps')) || (msgMap.msgProps == ""))
                 || (!(msgMap.containsKey('topic')) || (msgMap.topic == "")) ) {
             echo "Message Topic or Message Properties not defined or empty"
-            sh 'exit 1'
+            sh script: 'exit 1', label: "Message Topic or Message Properties not defined or empty"
         }
         sendCIMessage messageContent: msgMap.msgContent,
                 messageProperties: msgMap.msgProps,
